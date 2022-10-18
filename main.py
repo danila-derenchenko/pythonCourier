@@ -1,20 +1,17 @@
+import math
 
-curiers = [[400, 70], [200, 40], [40000, 100000]]
 
-orders = [[10, 900], [6000, 300], [20, 400], [65, 23]]
+class Tochka:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
 
-result = {}
+    def __str__(self):
+        return "Точка с координатами (" + str(self.x) + ", " + str(self.y) + ")"
 
-for i in range(len(orders)):
-    distanse = []
-    for j in range(len(curiers)):
-        d = ((curiers[j][0] - orders[i][0]) ** 2 + (curiers[j][1] - orders[i][1]) ** 2) ** 0.5
-        distanse.append(d)
-    indexCurier = distanse.index(min(distanse))
-    time = min(distanse) / 5
-    result[i] = {
-        "order": i,
-        "curier": indexCurier,
-        "time": time
-    }
-print(result)
+    def get_distanse(self, other_point):
+        return math.dist((self.x, self.y), (other_point.x, other_point.y))
+
+a = Tochka(4, 9)
+b = Tochka(6, 9)
+print(a.get_distanse(b))
