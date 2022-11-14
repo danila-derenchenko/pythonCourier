@@ -1,20 +1,25 @@
+import math
 
-curiers = [[400, 70], [200, 40], [40000, 100000]]
+orders = [[4, 5], [6, 9]]
 
-orders = [[10, 900], [6000, 300], [20, 400], [65, 23]]
-
-result = {}
-
-for i in range(len(orders)):
-    distanse = []
-    for j in range(len(curiers)):
-        d = ((curiers[j][0] - orders[i][0]) ** 2 + (curiers[j][1] - orders[i][1]) ** 2) ** 0.5
-        distanse.append(d)
-    indexCurier = distanse.index(min(distanse))
-    time = min(distanse) / 5
-    result[i] = {
-        "order": i,
-        "curier": indexCurier,
-        "time": time
-    }
-print(result)
+class Curier:
+    def __new__(cls, *args, **kwargs):
+        return super().__new__(cls)
+    def __init__(self, x, y, name):
+        self.coordinate = Point(x, y)
+        self.name = name
+        self.coordinate.searchOrder()
+class Point:
+    def __new__(cls, *args, **kwargs):
+        return super().__new__(cls)
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    def searchOrder(self):
+        min = 100000
+        ind = 100000
+        for i in range(len(orders)):
+            if math.dist((self.x, self.y), (i[0], i[1])) < min:
+                min = math.dist((self.x, self.y), (i[0], i[1]))
+                ind = i
+curier = Curier(4, 8, "Anton")
