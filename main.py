@@ -9,7 +9,7 @@ class Curier:
         self.name = name
         self.id = id
         self.speed = speed
-        self.history = History()
+        self.history = History(self.id)
     def restartSearch(self):
         self.searchOrders()
     def searchOrders(self):
@@ -31,7 +31,6 @@ class Curier:
             print("Заказ доставлен за время " + str(timer) + " " + str(self.id))
         else:
             print("Заказов больше нет. Курьер " + str(self.id))
-            self.history.getHistory()
 class Point:
     def __new__(cls, *args, **kwargs):
         return super().__new__(cls)
@@ -47,8 +46,9 @@ class Point:
 class History:
     def __new__(cls, *args, **kwargs):
         return super().__new__(cls)
-    def __init__(self):
+    def __init__(self, id):
         self.history = []
+        self.id = id
     def addOrder(self, timer, fromStart, toFinish, orders):
         self.history.append({
             "time": timer,
@@ -57,16 +57,18 @@ class History:
             "orders": orders
         })
     def getHistory(self):
-        print(self.history)
+        print("Курьер " + str(self.id) + " " + str(self.history))
 curiers = []
 orders = []
 
 for i in range(random.randint(5, 10)):
     curiers.append(Curier(random.randint(0, 100), random.randint(0, 100), "Alexey", i + 1, random.randint(4, 8)))
 
-for i in range(10):
+for i in range(15):
     orders.append([random.randint(0, 100), random.randint(0, 100)])
 
 while len(orders) > 0:
     for i in curiers:
         i.searchOrders()
+for i in curiers:
+    i.history.getHistory()
